@@ -1,8 +1,122 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<main class="container mt-4">
+    <button class="btn btn-primary sidebar-toggle" type="button" onclick="toggleSidebar()">Filtrelemeler</button>
+    <div class="row">
+        <aside class="col-md-3 sidebar border">
+            <h4>Filtrelemeler</h4>
+            <form>
+                <div class="form-group">
+                    <label for="category">Kategori</label>
+                    <select class="form-control" id="category">
+                        <option>Elektronik</option>
+                        <option>Mobilya</option>
+                        <option>Giyim</option>
+                        <option>Kitap</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priceRange">Fiyat Aralığı</label>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control price-input" id="priceRangeMin" placeholder="Min">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control price-input" id="priceRangeMax" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="condition">Durum</label>
+                    <select class="form-control" id="condition">
+                        <option>Yeni</option>
+                        <option>İkinci El</option>
+                        <option>Yenilenmiş</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrele</button>
+            </form>
+        </aside>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+        <section class="col-md-9">
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 search-container">
+                        <input id="input_search" type="search" class="form-control" value="" placeholder="Ara">
+                        <button id="btn_search" type="submit" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="container mt-4">
+                <div class="card card-custom">
+                    <div class="card-header card-header-custom">İlan Listesi</div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex">
+                            <img src="https://via.placeholder.com/150" alt="Ürün Resmi">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-1">MACROTRON NXR-1550HR X-RAY</h5>
+                                <p class="mb-1">İş Makineleri ve Sanayi / Endüstri Makineleri</p>
+                                <small class="text-muted">Ülke / Şehir: Türkiye</small>
+                                <small class="text-muted">Tarih: 14.05.2024</small>
+                                <small class="text-muted">Fiyat: -</small>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex">
+                            <img src="https://via.placeholder.com/150" alt="Ürün Resmi">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-1">METAL SOYUNMA DOLABI SATIŞI (2.EL)-(1229455)-7</h5>
+                                <p class="mb-1">Hazır Ürün / Muhafazalar</p>
+                                <small class="text-muted">Ülke / Şehir: Türkiye</small>
+                                <small class="text-muted">Tarih: 08.05.2024</small>
+                                <small class="text-muted">Fiyat: -</small>
+                            </div>
+                        </li>
+                        <li class="list-group-item d-flex">
+                            <img src="https://via.placeholder.com/150" alt="Ürün Resmi">
+                            <div class="d-flex flex-column">
+                                <h5 class="mb-1">METAL SOYUNMA DOLABI SATIŞI (2.EL)-(1229455)-7</h5>
+                                <p class="mb-1">Hazır Ürün / Muhafazalar</p>
+                                <small class="text-muted">Ülke / Şehir: Türkiye</small>
+                                <small class="text-muted">Tarih: 08.05.2024</small>
+                                <small class="text-muted">Fiyat: - </small>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2>Popüler Açık Artırmalar</h2>
+            <div class="row">
+                <!-- Popüler açık artırmalar için kartlar -->
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="https://placehold.co/600x400" class="card-img-top" alt="Ürün 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Ürün 1</h5>
+                            <p class="card-text">Bu ürün hakkında kısa bilgi.</p>
+                            <a href="#" class="btn btn-primary">Teklif Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="https://placehold.co/600x400" class="card-img-top" alt="Ürün 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Ürün 2</h5>
+                            <p class="card-text">Bu ürün hakkında kısa bilgi.</p>
+                            <a href="#" class="btn btn-primary">Teklif Ver</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="https://placehold.co/600x400" class="card-img-top" alt="Ürün 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Ürün 3</h5>
+                            <p class="card-text">Bu ürün hakkında kısa bilgi.</p>
+                            <a href="#" class="btn btn-primary">Teklif Ver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
