@@ -1,0 +1,43 @@
+﻿@model stokEnka.Models.User
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <h2 class="mb-4">Kayıt Formu</h2>
+        <form asp-action="RegisterUser" method="post">
+            <div class="mb-3">
+                <label for="FirstName" class="form-label">Ad</label>
+                <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model?.FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="LastName" class="form-label">Soyad</label>
+                <input type="text" class="form-control" id="LastName" name="LastName" value="@Model?.LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Email" class="form-label">E-posta</label>
+                <input type="email" class="form-control" id="Email" name="Email" value="@Model?.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Phone" class="form-label">Telefon</label>
+                <input type="tel" class="form-control" id="Phone" name="Phone" value="@Model?.Phone" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Password" class="form-label">Şifre</label>
+                <input type="password" class="form-control" id="Password" name="Password" value="@Model?.Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
