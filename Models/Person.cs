@@ -7,25 +7,25 @@ namespace stokEnka.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Lütfen ad alanını doldurun.")]
         [Display(Name = "Ad")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Soyad alanı zorunludur.")]
         [Display(Name = "Soyad")]
         public string LastName { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "E-posta alanı zorunludur.")]
+        [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz.")]
         [Display(Name = "E-posta")]
         public string Email { get; set; }
 
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "Telefon alanı zorunludur.")]
+        [Phone(ErrorMessage = "Geçerli bir telefon numarası giriniz.")]
         [Display(Name = "Telefon")]
         public string Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Şifre alanı zorunludur.")]
         [Display(Name = "Şifre")]
         public string Password { get; set; }
     }
