@@ -9,40 +9,63 @@ using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.Razor;
-using System.Linq;
+using System.Reflection;
+using stokEnka.Resources;
+using stokEnka.Services;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Kültürleri tanýmla
-var supportedCultures = new[] { "en-US", "tr-TR" };
-var localizationOptions = new RequestLocalizationOptions()
-    .SetDefaultCulture("tr-TR") // Türkçe varsayýlan dil olarak ayarlandý
-    .AddSupportedCultures(supportedCultures)
-    .AddSupportedUICultures(supportedCultures);
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    options.DefaultRequestCulture = new RequestCulture("tr-TR", "tr-TR");
-    options.SupportedCultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
-    options.SupportedUICultures = supportedCultures.Select(c => new CultureInfo(c)).ToList();
-});
 
 // Yerelleþtirme servislerini ekle
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-// MVC ve yerelleþtirme için servisler ekle
-builder.Services.AddControllersWithViews()
-    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization();
+builder.Services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+        {
+            var assemblyName = new AssemblyName(typeof(ApplicationResource).GetTypeInfo().Assembly.FullName);
+            return factory.Create("ApplicationResource", assemblyName.Name);
+        };
+    });
 
-// Parola karma servisi
+builder.Services.Configure<RequestLocalizationOptions>(opt =>
+{
+    var cultures = new List<CultureInfo>()
+    {
+        new CultureInfo("tr-TR"),
+        new CultureInfo("en-US"),
+    };
+    opt.DefaultRequestCulture = new RequestCulture(new CultureInfo("tr-TR"));
+    opt.SupportedCultures = cultures;
+    opt.SupportedUICultures = cultures;
+
+    opt.RequestCultureProviders = new List<IRequestCultureProvider>()
+    {
+        new QueryStringRequestCultureProvider(),
+        new CookieRequestCultureProvider(),
+        new AcceptLanguageHeaderRequestCultureProvider()
+    };
+});
+
+// MVC ve yerelleþtirme için servisler ekle
+builder.Services.AddControllersWithViews();
+
+// LocalizationService servisini ekleyin
+builder.Services.AddSingleton<LocalizationService>();
+
+// hash
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-// Veritabaný baðlantýsý
+// db
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+
+var options = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+if (options != null)
+    app.UseRequestLocalization(options.Value);
 
 // HTTP istek iþleyicisini yapýlandýr
 if (!app.Environment.IsDevelopment())
@@ -53,8 +76,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseRequestLocalization(app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
 app.UseRouting();
 app.UseAuthorization();
